@@ -1,11 +1,9 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, authentication_keys: [:login]
-
+  has_one :cart
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, authentication_keys: [:login]
   attr_writer :login
-
+  after_create :make_cart
+  
   def login
     @login || self.mobile || self.email
   end
@@ -22,5 +20,12 @@ class User < ApplicationRecord
       end
     end
   end
-
+  
+  private
+  
+  def make_cart
+    @cart = self.create_cart()
+    @cart.save
+  end
+  
 end

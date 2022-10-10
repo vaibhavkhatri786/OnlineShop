@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
-  devise_scope :user do  
-    get '/users/sign_out' => 'devise/sessions#destroy'     
- end
+  
   resources :categories
   resources :products
-  get 'home/index'
-  root "home#index"
+  resources :buyers, only: [:index, :show]
+  resources :order_items
+  resources :cart_items
+  resource :carts, only: [:show]
+  root "buyers#index"
 end

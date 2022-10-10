@@ -12,7 +12,7 @@
       </ul>
     </div>
   <% end %>
- 
+
   <p>
     <%= form.label :name %><br>
     <%= form.text_field :name %>
@@ -22,7 +22,12 @@
     <%= form.label :price %><br>
     <%= form.number_field :price %>
   </p>
- 
+
+  <p>
+    <%= form.label :category %><br>
+    <%= select_tag "category_id", options_for_select(Category.all.collect {|u| [ u.name, u.id ] })%>
+  </p>
+
   <p>
     <%= form.submit %>
   </p>
